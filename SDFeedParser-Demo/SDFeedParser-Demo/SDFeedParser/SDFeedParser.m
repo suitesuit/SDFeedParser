@@ -14,23 +14,23 @@
 #import "SDTag+SDTagFromDictionary.h"
 
 @implementation SDFeedParser
-
+//@property (nonatomic) NSString* nextLink;
 - (void)parseURL:(NSString*)urlString success:(void (^)(NSArray *postsArray, NSInteger postsCount))successBlock failure:(void (^)(NSError *error))failureBlock{
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
-          
+            printf("TEST");
             //Get posts count
-            _postsCount = [responseObject[@"count_total"] integerValue];
+            _postsCount = [responseObject[@"count"] integerValue];
             
             //Get pages count
             _pagesCount = [responseObject[@"pages"] integerValue];
             
             //Fetch posts
-            NSMutableArray *allPosts = [[NSMutableArray alloc]initWithCapacity:[responseObject[@"count_total"] integerValue]];
-            NSArray *fetchedPostsArray = responseObject[@"posts"];
+            NSMutableArray *allPosts = [[NSMutableArray alloc]initWithCapacity:[responseObject[@"count"] integerValue]];
+            NSArray *fetchedPostsArray = responseObject[@"results"];
             for (NSDictionary *eachPost in fetchedPostsArray) {
                 
                 SDPost *currentPost = [SDPost SDPostFromDictionary:eachPost];
@@ -47,7 +47,7 @@
                 
                 //Fetch posts tags
                 NSMutableArray *allTags = [[NSMutableArray alloc]init];
-                NSArray *fetchedTagsArray = eachPost[@"tags"];
+                NSArray *fetchedTagsArray = eachPost[@"ttt"];
                 for (NSDictionary *eachTag in fetchedTagsArray) {
                     
                     SDTag *currentTag = [SDTag SDTagFromDictionary:eachTag];
@@ -67,7 +67,7 @@
                 currentPost.commentsArray = [allComments copy];
                 currentPost.commentsCount = [eachPost[@"comment_count"] integerValue];
                 currentPost.status = responseObject[@"comment_status"];
-
+                
                 [allPosts addObject:currentPost];
             }
             _postsArray = [allPosts copy];

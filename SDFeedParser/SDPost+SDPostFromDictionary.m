@@ -20,7 +20,7 @@
     newPost.title = [NSString stringByStrippingHTML:dictionary[@"title"]];
     newPost.plainTitle = dictionary[@"title_plain"];
     newPost.thumbnailURL = dictionary[@"thumbnail"];
-    newPost.content = dictionary[@"content"];
+    newPost.content = dictionary[@"blogHTML"];
     
     //Uncomment for plain content, but it may decrease performance
     //newPost.plainContent = [NSString stringByStrippingHTML:dictionary[@"content"]];

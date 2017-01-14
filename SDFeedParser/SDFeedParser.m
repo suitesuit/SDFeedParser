@@ -22,14 +22,14 @@
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             
             //Get posts count
-            _postsCount = [responseObject[@"count_total"] integerValue];
+            _postsCount = [responseObject[@"count"] integerValue];
             
             //Get pages count
             _pagesCount = [responseObject[@"pages"] integerValue];
             
             //Fetch posts
             NSMutableArray *allPosts = [[NSMutableArray alloc]initWithCapacity:[responseObject[@"count_total"] integerValue]];
-            NSArray *fetchedPostsArray = responseObject[@"posts"];
+            NSArray *fetchedPostsArray = responseObject[@"results"];
             for (NSDictionary *eachPost in fetchedPostsArray) {
                 
                 SDPost *currentPost = [SDPost SDPostFromDictionary:eachPost];
@@ -46,7 +46,7 @@
                 
                 //Fetch posts tags
                 NSMutableArray *allTags = [[NSMutableArray alloc]init];
-                NSArray *fetchedTagsArray = eachPost[@"tags"];
+                NSArray *fetchedTagsArray = eachPost[@"ttt"];
                 for (NSDictionary *eachTag in fetchedTagsArray) {
                     
                     SDTag *currentTag = [SDTag SDTagFromDictionary:eachTag];
